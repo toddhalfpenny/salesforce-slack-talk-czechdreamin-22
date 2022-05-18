@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/czechdreamin22.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -16,8 +16,511 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<!-- 
+					===========================================================
+					TITLE
+				-->
+				<section id="title" class="title-slide">
+					<h1>Building Custom Slack Apps</br>Now and in the Future</h1>
+					<hr/>
+					<p class="author">Todd Halfpenny</p>
+					<p class="author"><a href="https://twitter.com/toddhalfpenny">@toddhalfpenny</a></p>
+				</section>
+
+
+				<!--
+					=========================================================== 
+					ME
+				-->
+				<section id="me">
+					<h1>Me</h1>
+					<ul>
+						<li>Mobile Technical Architect @ <a>Caddify</a></li>
+						<li>London Dev Group organiser</li>
+						<li><a href="https://londonscalling.net">London's Calling</a> organiser</li>
+						<li>Salesforce MVP</li>
+						<li>Founder of <a href="https://shirtforce.org">Shirtforce</a></li>
+					</ul>
+					<img class="r-stretch"  data-src="assets/imgs/todd.jpeg">
+					<p>&nbsp;</p>
+				</section>
+
+				<!-- 
+					===========================================================
+					TOPIC INTRO
+				 -->
+				<section>
+					<h1>Buildng Custom Slack Apps</h1>
+					<ul>
+						<li class="fade-in-then-semi-out fragment">What, Why, and when (and when not to)</li>
+						<li class="fade-in-then-semi-out fragment">What Slacks offer us</li>
+						<li class="fade-in-then-semi-out fragment">Architecture</li>
+						<li class="fade-in-then-semi-out fragment">Building an app</li>
+						<li class="fade-in-then-semi-out fragment">The future</li>
+						<li class="fade-in-then-semi-out fragment">Q &amp; A</li>
+					</ul>
+				</section>
+				
+				<!-- 
+					===========================================================
+					What are slack app, exactly?
+				 -->
+				 <section id="what-are-apps">
+					<h1>What are slack apps, exactly?</h1>
+					<!-- TODO IMAGE CREDITS-->
+					<div class="r-stack">
+						<div class="fragment current-visible"  data-fragment-index="1">	
+							<img class="r-stretch screenshot" data-src="assets/imgs/polly.png">
+						</div>
+						<div class="fragment current-visible"  data-fragment-index="2">	
+							<img class="r-stretch screenshot" data-src="assets/imgs/asana.png">
+						</div>
+						<div class="fragment current-visible"  data-fragment-index="3">	
+							<img class="r-stretch screenshot" data-src="assets/imgs/salesforce.png">
+						</div>
+						<div class="fragment current-visible"  data-fragment-index="4">	
+							<img class="r-stretch screenshot" data-src="assets/imgs/task-titan.svg">
+						</div>
+					</div>
+					<aside class="notes">
+						<ul>
+							<li>Apps exist already, like Polly</li>
+							<li>Ones for Asana, that can post messages into channels</li>
+							<li>Salesforce announced Sales/Service/Marketing one</li>
+							<li>Can also have their own "app home"</li>
+						</ul>
+					</aside>			
+				</section>
+				
+				<!-- 
+					===========================================================
+					Why & When
+				 -->
+				<section>
+					<h1>Why, and When</h1>
+					<ul>
+						<li class="fade-in-then-semi-out fragment">Cos it's Salesforce now :)</li>
+						<li class="fade-in-then-semi-out fragment">It's where your users are</li>
+						<li class="fade-in-then-semi-out fragment">Useful for "Thin" work</li>
+						<li class="fade-in-then-semi-out fragment">Not for complicated UI / mass of data</li>
+					</ul>	
+					<aside class="notes">
+						<ul>
+							<li>Huge push - partners, certs, roadmap</li>
+							<li>Digital HQ - bringing SF to where you work</li>
+							<li>Term used internally - context, small<ul><li>approving an expense</li>
+								<li>assigning a case</li>
+								<li>posting chatter</li>
+								<li>searching for a record</li>
+								<li>work centered around conversation</li>
+								</ul>
+							</li>
+						</ul>
+					</aside>			
+				</section>
+				
+									<!-- ===========================================================
+					Slack Dev - UI Elements
+				-->
+				<section >
+					<h1>Slack Development</h1>
+					<ul>
+						<li>
+							What do we have to play with?
+							<ul>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">UI Elements</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="2" data-fragment-index="2">Listeners</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="4">APIs</li>
+							</ul>
+						</li>
+					</ul>
+					<div class="r-stack">
+						<div class="fragment current-visible fade-out" data-fragment-index="1">
+							<img class="r-stretch screenshot" data-src="assets/imgs/blockkit-ui.webp">
+						</div>
+						<div class="fragment current-visible"  data-fragment-index="2">			
+							<img class="r-stretch screenshot" data-src="assets/imgs/global_shortcuts.svg">
+							<img class="r-stretch screenshot" data-src="assets/imgs/message_shortcuts.svg">
+						</div>
+						<div class="fragment current-visible"  data-fragment-index="3">	
+							<img class="r-stretch screenshot" data-src="assets/imgs/slash_commands.webp">
+						</div>
+						<div class="fragment current-visible"  data-fragment-index="4">	
+							<img class="r-stretch screenshot" data-src="assets/imgs/messaging_getting_started_helloworld.webp">
+						</div>
+					</div>
+					<p class="attribution">Images: https://dev.slack.com/</p>
+					<aside class="notes">
+						<ul>
+							<li>UI - Visual Components
+								<ul>
+									<li>Actions (buttons)</li>
+									<li>Input (Text, checkbox, date)</li>
+									<li>Sections / Headers / Dividers</li>
+								</ul>
+							</li>
+							<li>Listeners - Events / actions
+								<ul>
+									<li>Events</li>
+									<li>Actions / Commands</li>
+									<li>Messages</li>
+								</ul>
+							</li>
+							<li>APIs
+								<ul>
+									<li>Post messgaes</li>
+									<li>Channels</li>
+									<li>Files</li>
+								</ul>
+							</li>
+						</ul>
+					</aside>
+				</section>
+
+
+				<!-- ===========================================================
+					Slack Dev - Tools
+				-->
+				<section>
+					<h1>Slack Development</h1>
+					<ul>
+						<li>
+							How do we access these things?
+							<ul>
+								<li>Block Kit</li>
+							</ul>
+						</li>
+					</ul>
+					<div class="blockkit">
+						<img class="r-stretch screenshot" data-src="assets/imgs/blockkit-ui.webp">
+						<pre><code data-trim data-noescape data-line-numbers="0|3-10|11-13|14-20|16-19|38-52">
+							{
+								"blocks": [
+									{
+										"type": "header",
+										"text": {
+											"type": "plain_text",
+											"text": "This is a header block",
+											"emoji": true
+										}
+									},
+									{
+										"type": "divider"
+									},
+									{
+										"type": "section",
+										"text": {
+											"type": "mrkdwn",
+											"text": "New Paid Time Off request from <example.com|Fred Enriquez>\n\n<https://example.com|View request>"
+										}
+									},
+									{
+										"type": "section",
+										"text": {
+											"type": "mrkdwn",
+											"text": "Pick a date for the deadline."
+										},
+										"accessory": {
+											"type": "datepicker",
+											"initial_date": "1990-04-28",
+											"placeholder": {
+												"type": "plain_text",
+												"text": "Select a date",
+												"emoji": true
+											},
+											"action_id": "datepicker-action"
+										}
+									},
+									{
+										"type": "actions",
+										"elements": [
+											{
+												"type": "button",
+												"text": {
+													"type": "plain_text",
+													"text": "Click Me",
+													"emoji": true
+												},
+												"value": "click_me_123",
+												"action_id": "actionId-0"
+											}
+										]
+									}
+								]
+							}
+						</code></pre>
+					</div>
+					<aside class="notes">
+						<ul>
+							<li>Block Kit
+								<ul>
+									<li>Framework for clean + consistent UIs</li>
+									<li>Reusable Components</li>
+									<li>Block Kit builder - prototype</li>
+									<li>Limited, not images</li>
+								</ul>
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h1>Slack Development</h1>
+					<ul>
+						<li>
+							How do we access these things?
+							<ul>
+								<li>Bolt SDK</li>
+							</ul>
+						</li>
+					</ul>						
+					<pre class="boltsdk" ><code data-trim data-noescape data-line-numbers="0|1|3|5|7-12|15-17"> 
+						const {whoAmIResponse} = require('.../modals');
+
+						const whoamiCallback = async ({ shortcut, ack, client }) => {
+								await ack();
+								const currentuser = await conn.identity();
+
+								await client.views.open({
+									trigger_id: shortcut.trigger_id,
+									view: whoAmIResponse(
+										conn.instanceUrl,
+										currentuser.username)
+								});
+						};
+
+						module.exports.register = (app) => {
+							app.shortcut('who_am_i', whoamiCallback);
+						};
+					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>Bolt SDKs
+								<ul>
+									<li>JS / Python / Java</li>
+									<li>Auth</li>
+									<li>Events + messages</li>
+									<li>Web API</li>
+								</ul>
+							</li>
+						</ul>
+					</aside>
+				</section>
+
+
+				<!-- 
+					===========================================================
+					Our use case
+				 -->
+				<section>
+					<h1>Our use case</h1>
+					<!-- TODO App images (maybe app store ones)-->
+					<ul>
+						<li>Our customers create mobile apps</li>
+						<li>They want a dashboard for marketing</li>
+						<li>App installs</li>
+						<li>Rating</li>
+						<li>See latest reviews</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Custom obj storing this info</li>
+						</ul>
+					</aside>
+				</section>
+
+
+				<!-- ===========================================================
+					Architecture
+				 -->
+				 <section>
+					<h1>Architecture</h1>
+					<img class="r-stretch screenshot"   data-src="assets/imgs/sf-slack-arch-01.webp">
+					<p class="attribution">Image: https://developer.salesforce.com/blogs/</p>
+					<aside class="notes">
+						<ul>
+							<li>Slack : Middleware : SF</li>
+							<li>Connected App for incoming</li>
+							<li>HTTP Callouts for outgoing</li>
+						</ul>
+					</aside>
+				</section>
+
+
+				<!-- ===========================================================
+					Starter Kit
+				 -->
+				 <section>
+					<h1>The Salesforce Slack Starter Kit</h1>	
+					<div class="cols-2">
+						<div class="col">
+							<pre><code data-trim data-noescape data-line-numbers="0|2-3|4-5|7|11|8-9">
+								.
+								├── apps
+								│   └── salesforce-slack-app
+								├── force-app
+								│   └── main
+								├── package.json
+								├── README.md
+								├── scripts
+								│   ├── deploy.js
+								│   └── templates
+								└── sfdx-project.json
+
+							</code></pre>
+						</div>
+						<div class="col fragment">
+							<h3>Deploy script</h3>
+							<ul>
+								<li>Salesforce</li>
+								<ul>
+									<li>Creates a scratch</li>
+									<li>Objects for Auth</li>
+									<li>Connected App</li>
+								</ul>
+								<li>Creates a Heroku app</li>
+								<li>Creates a whole load of keys</li>
+							</ul>
+						</div>
+					</div>	
+					<aside class="notes">
+						<ul>
+							<li>OSS - Accepting PRs</li>
+							<li>Scaffolding<ul>
+									<li>Heroku node app</li>
+									<li>SF objects/class/Connected App</li>
+									<li>Slack manifest</li>
+									<li>Deploy script</li>
+									<li>Scratch Org</li>
+								</ul>
+							</li>
+							<li>Folder structure</li>
+							<li>Comms - jsforce - stores auth info</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+				<video data-autoplay src="assets/vids/whoami.mp4"></video>
+					<aside class="notes">
+						<ul>
+							<li>Who am i shortcut</li>
+							<li>Leads to what are shortcuts</li>
+						</ul>
+					</aside>
+				</section>
+				
+
+
+				<!-- ===========================================================
+					Back to our app
+				 -->
+				<section data-transition="slide-in none">
+					<h1>Back to our app</h1>
+					<!-- TODO FLOW/ARCH IMAGES for each step -->
+					<div class="r-stack margin-0">
+						<div class="fragment current-visible">
+							Listen for our app's Home being opened
+							<pre class="padding " ><code class="javascript" data-trim data-noescape> 
+								module.exports.register = (app) => {
+									app.event('app_home_opened', appHomeOpenedCallback);
+								};			
+							</code></pre>
+						</div>
+						<div class="fragment current-visible">
+							Query for data, using jsforce
+							<pre class="padding" ><code class="javascript"  data-trim data-noescape> 
+								const queryListingSummaries = async (connection) => {
+
+										// Query for store listing summary
+										const result = await connection.query(
+											`SELECT OS__c, Total_Downloads__c, ...
+											FROM Listing_Summary__c
+											ORDER BY CreatedDate DESC LIMIT 10`
+										);
+										return result;
+
+								}	
+							</code></pre>
+						</div>
+					</div>
+					<aside class="notes">
+						<ul>
+							<li>jsforce</li>
+							<li>Starter app user<->User auth</li>
+						</ul>
+					</aside>
+				</section>
+					
+				<section data-transition="none slide-out">
+					<h1>Back to our app</h1>
+					<!-- TODO FLOW/ARCH IMAGES for each step -->
+							Build our Block Kit JSON
+							<pre ><code class="javascript" data-trim data-noescape data-line-numbers="0|1-2|4|5-7|9-10|12-16|19-21|23"> 
+								const { HomeTab, Blocks, Elements, Md, Actions  } 
+									= require('slack-block-builder');
+
+								const dashboardScreen = (listingSummaries) => {		
+									const homeTab = HomeTab().blocks(
+										Blocks.Header({ text: `App Store Listing Summaries` })
+									);
+
+									const listingArray = listingSummaries.records.map(
+										osEmoji(listing, requestIndex) => {
+										...
+										let listingText = `${Md.bold(listing.OS__c)}\n`;
+										listingText += `${Md.bold('Total Downloads:')} `;
+										listingText += `${listing.Total_Downloads__c}\n`;
+										...
+										return listingText;
+									}
+
+									homeTab.blocks(
+        								Blocks.Section().fields(listingArray)
+									);
+
+									return homeTab.buildToJSON();
+								}
+							</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>Home tab, with header</li>
+							<li>Create an array of text items</li>
+							<li>Use fields - 2 columsn</li>
+							<li>add to home and return</li>
+						</ul>
+					</aside>
+				</section>
+
+				<section>
+					<img src="assets/imgs/dashboard-01.png">
+				</section>
+
+
+				<section>
+					<video data-autoplay src="assets/vids/dashboard-button.mp4"></video>
+					<aside class="notes">
+						<ul>
+							<li>Who am i shortcut</li>
+							<li>Leads to what are shortcuts</li>
+						</ul>
+					</aside>
+				</section>
+
+				<!-- 
+					===========================================================
+					Thank you
+				 -->
+				<section id="thankyou" class="thankyou center">
+					<h1>Thank you</h1>
+					<hr/>
+					<p class="author">Todd Halfpenny</p>
+					<p class="author"><a href="https://twitter.com/toddhalfpenny">@toddhalfpenny</a></p>
+				</section>
+
+				<footer id='footer' class="hidden">
+					<p class="author"><a href="https://twitter.com/toddhalfpenny">@toddhalfpenny</a></p>
+					<p class="czechtags"><a href="https://twitter.com/CzechDreamin">@CzechDreamin #CD22</a></p>
+				</footer>
 			</div>
 		</div>
 
@@ -25,16 +528,51 @@
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
 		<script>
 			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
 			// - https://revealjs.com/config/
 			Reveal.initialize({
+				controls: false,
 				hash: true,
+				center: false,
+				maxScale: 1.8,
+				margin: 0.10,
+				progress: false,
+				width: 1200,
+				height: 900,
 
 				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
 			});
+			Reveal.on( 'slidechanged', event => {
+				console.log('slidechanged', event.currentSlide);
+				switch ( event.currentSlide.id ) {
+					case 'title' :
+					case 'what-are-apps':
+					case 'thankyou':
+						hideFooter();
+						break;
+					default: 
+						showFooter();
+				}
+			} );
+
+			function hideFooter() {
+				console.log('hideFooter');
+				let el = document.getElementById('footer');
+
+				console.log('footer', el);
+				if (el.className !== 'hidden'){ el.className = 'hidden' };
+			}
+
+			function showFooter() {
+				console.log('showFooter');
+				let el = document.getElementById('footer');
+				console.log('footer', el);
+				if (el.className && el.className === 'hidden'){ el.className = ''};
+			}
 		</script>
 	</body>
 </html>
