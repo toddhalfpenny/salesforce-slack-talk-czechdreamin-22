@@ -412,6 +412,16 @@ footer.hidden {
   background-size: 5em, 10%;
 }
 
+.fullvideo {
+  background-image: none;
+}
+
+.href {
+  display: block;
+  font-size: 0.6em;
+  color: var(--accent);
+}
+
 .reveal .slides {
   text-align: left;
 }
@@ -499,4 +509,16 @@ pre.boltsdk {
   font-size: 0.5em;
   line-height: 1.1em;
   width: 100%;
+}
+
+#using-foyer1 pre {
+  height: 700px;
+}
+
+#using-foyer2 pre, #using-foyer1 pre {
+  height: 500px;
+}
+
+#using-foyer3 pre {
+  height: 600px;
 }

@@ -67,7 +67,6 @@
 				 -->
 				 <section id="what-are-apps">
 					<h1>What are slack apps, exactly?</h1>
-					<!-- TODO IMAGE CREDITS-->
 					<div class="r-stack">
 						<div class="fragment current-visible"  data-fragment-index="1">	
 							<img class="r-stretch screenshot" data-src="assets/imgs/polly.png">
@@ -193,7 +192,8 @@
 					</ul>
 					<div class="blockkit">
 						<img class="r-stretch screenshot" data-src="assets/imgs/blockkit-ui.webp">
-						<pre><code data-trim data-noescape data-line-numbers="0|3-10|11-13|14-20|16-19|38-52">
+						<pre><code data-trim data-noescape data-line-numbers="3-10">
+						<!--<pre><code data-trim data-noescape data-line-numbers="0|3-10|11-13|14-20|16-19|38-52">-->
 							{
 								"blocks": [
 									{
@@ -273,12 +273,8 @@
 							</ul>
 						</li>
 					</ul>						
-					<pre class="boltsdk" ><code data-trim data-noescape data-line-numbers="0|1|3|5|7-12|15-17"> 
-						const {whoAmIResponse} = require('.../modals');
-
+					<pre class="boltsdk" ><code data-trim data-noescape data-line-numbers="0|3|12"> 
 						const whoamiCallback = async ({ shortcut, ack, client }) => {
-								await ack();
-								const currentuser = await conn.identity();
 
 								await client.views.open({
 									trigger_id: shortcut.trigger_id,
@@ -399,8 +395,9 @@
 					</aside>
 				</section>
 
-				<section>
-				<video data-autoplay src="assets/vids/whoami.mp4"></video>
+				<section id="whoami" class="fullvideo" data-background-video ="assets/vids/whoami.mp4" 
+				data-background-size="contain">
+				<!-- <video data-autoplay src="assets/vids/whoami.mp4"></video> -->
 					<aside class="notes">
 						<ul>
 							<li>Who am i shortcut</li>
@@ -496,12 +493,203 @@
 				</section>
 
 
-				<section>
-					<video data-autoplay src="assets/vids/dashboard-button.mp4"></video>
+				<section id="createcase" class="fullvideo" data-background-video="assets/vids/create-case.mp4" 
+				data-background-size="contain">
+					<!-- <video data-autoplay src="assets/vids/create-case.mp4"></video> -->
 					<aside class="notes">
 						<ul>
 							<li>Who am i shortcut</li>
 							<li>Leads to what are shortcuts</li>
+						</ul>
+					</aside>
+				</section>
+
+				<!-- ===========================================================
+					Local Deveopment
+				 -->
+				<section>
+					<h1>Local development</h1>
+					<ul>
+						<li class="fade-in-then-semi-out fragment">Our Heroku app, is a node app</li>
+						<li class="fade-in-then-semi-out fragment">ngrok - route a public IP to our localhost</li>
+						<li class="fade-in-then-semi-out fragment">Configure Slack + Salesforce</li>
+						<li class="fade-in-then-semi-out fragment">Run locally</li>
+						<li class="fade-in-then-semi-out fragment">Debug in VSCode</li>
+					</ul>
+				</section>
+				<section id="localdev" class="fullvideo" data-background-video="assets/vids/localdev-01.mp4" 
+				data-background-size="contain">
+					<!-- <video data-autoplay src="assets/vids/localdev-01.mp4"></video> -->
+					<aside class="notes">
+						<ul>
+							<li>Who am i shortcut</li>
+							<li>Leads to what are shortcuts</li>
+						</ul>
+					</aside>
+				</section>
+
+
+				<!-- ===========================================================
+					FOYER
+				 -->
+				<section data-transition="slide-in none">
+					<h1>The Future - Foyer</h1>
+					<img class="r-stretch screenshot" data-src="assets/imgs/foyer-arch-01.webp">
+					<aside class="notes">
+						<ul>
+							<li></li>
+							<li></li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="none slide-out">
+					<h1>The Future - Apex SDK for Slack</h1>
+					<ul>
+						<li class="fragment fade-in-then-semi-out">Slack SDK for Salesforce (Bolt based)</li>
+						<li class="fragment fade-in-then-semi-out">No need for Middleware</li>
+						<li class="fragment fade-in-then-semi-out">Currently Closed Pilot (partners)</li>
+						<li class="fragment fade-in-then-semi-out">Open Pilot in June, Beta in Winter</li>
+						<li class="fragment fade-in-then-semi-out">Packageable</li>
+						<li class="fragment fade-in-then-semi-out">Does NOT impact API calls (hopefully)</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Safe Harbour</li>
+							<li>Free to use</li>
+							<li>Some cases you might want to keep it</li>
+							<li>Handles Auth</li>
+							<li>UIs created from existing metadata</li>
+							<li>Apex SDK for Slack</li>
+						</ul>
+					</aside>
+				</section>
+
+
+				<!-- ===========================================================
+					Using FOYER (1)
+				 -->
+				<section id="using-foyer1">
+					<h1>App Home Opened - Event Dispatcher</h1>
+					<pre class="java padding" ><code data-trim data-noescape data-line-numbers="0|1-2|4|5|6-7|10-11">
+						public class EventDispatcherAppHomeOpened extends 
+							Slack.EventDispatcher {
+							...
+							public class Handler implements Slack.RunnableHandler {
+								public void run() {
+									Slack.ViewReference viewReference = 
+										Slack.View.app_home.get();
+									...
+									
+									Slack.ViewsPublishResponse response = 
+										botClient.viewsPublish(req);
+								}
+							}
+							...
+						}
+					</code></pre>
+				</section>
+
+
+				<!-- ===========================================================
+					Using FOYER (2)
+				 -->
+				 <section id="using-foyer2">
+					<h1>Data Provider</h1>
+					<pre class="padding" ><code data-trim data-noescape data-line-numbers="0">
+						public with sharing class DataProviderReview {
+
+							public static List&#60;Review__c> getReviews() {
+								
+								List&#60;Review__c> reviews = 
+									[SELECT Id, Name, Date__c, ...
+										FROM Review__c 
+										ORDER BY Date__c DESC LIMIT 5];
+								
+								return reviews;
+							}
+
+						}						
+					</code></pre>
+				</section>
+
+
+
+				<!-- ===========================================================
+					Using FOYER (3)
+				 -->
+				 <section id="using-foyer3">
+					<h1>View Definition</h1>
+					<pre class="padding language-yaml" ><code data-trim data-noescape data-line-numbers="0|1-3|7-9|10-13|18-21|25-30">
+dataproviders:
+	review:
+		definition: "apex__DataProviderReview.getReviews"
+components:
+	- definition: home
+		components:
+			- definition: header
+				properties:
+					text: "Recent reviews"
+			- definition: iteration
+				properties:
+					foreach: "{!review}"
+					foritem: "review"
+				components:
+					- definition: section
+						properties:
+						text:
+							text: "{!IF(review.OS__c == 'iOS',\
+								':apple:', \
+								':robot_face:')} \n
+								*Review:* {!review.Content__c}"
+							type: mrkdwn
+					- definition: actions
+						components:
+						- definition: button
+							properties:
+								label: "View Review"
+								style: "primary"
+								name: "view"
+								url: "{!view.properties.url}/{!review.Id}"		
+					</code></pre>
+				</section>
+
+				<!-- 
+					===========================================================
+					What we've covered
+				 -->
+				 <section>
+					<h1>Wrap-up</h1>
+					<ul>
+						<li class="fade-in-then-semi-out fragment">You can start building today</li>
+						<li class="fade-in-then-semi-out fragment">Huge focus from Salesforce</li>
+						<li class="fade-in-then-semi-out fragment">Great set of tools available</li>
+						<li class="fade-in-then-semi-out fragment">It's going to get a lot easier</li>
+						<li class="fade-in-then-semi-out fragment">Start thinking about your use-cases</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Get invoved and certified</li>
+						</ul>
+					</aside>
+				</section>
+
+				<!-- 
+					===========================================================
+					Resources
+				 -->
+				 <section class="center">
+					<h1>Resources</h1>
+					<ul>
+						<li class="fade-in-then-semi-out fragment">CodeLive video series<a target="_blank" href="https://www.youtube.com/watch?v=vhb5ZS5T73s" class="href">https://www.youtube.com/watch?v=vhb5ZS5T73s</a></li>
+						<li class="fade-in-then-semi-out fragment">Salesforce Slack Starter App<a target="_blank" href="https://github.com/developerforce/salesforce-slack-starter-kit"  class="href">https://github.com/developerforce/salesforce-slack-starter-kit</a></li>
+						<li class="fade-in-then-semi-out fragment">Ready to Fly App<a target="_blank" href="https://developer.salesforce.com/blogs/2022/02/building-a-slack-app-that-integrates-with-salesforce-part-1-architectural-overview"  class="href">https://developer.salesforce.com/blogs/2022/02/building-a-slack-app-that-integrates-with-salesforce-part-1-architectural-overview</a></li>
+						<li class="fade-in-then-semi-out fragment">Partner Slack Chatter Group<a target="_blank" href="https://partners.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F94V0000002Bv7"  class="href">https://partners.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F94V0000002Bv7</a></li>
+						<li class="fade-in-then-semi-out fragment">Slack Dev Docs<a  target="_blank" href="https://slack.dev/" class="href">https://slack.dev/</a></li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Kevin Poorma + Mohith Shrivastava</li>
+							<li>Alba Rivas - git repo, blog and youtube</li>
 						</ul>
 					</aside>
 				</section>
@@ -551,6 +739,10 @@
 				switch ( event.currentSlide.id ) {
 					case 'title' :
 					case 'what-are-apps':
+					case 'whoami':
+					case 'createcase':
+					case 'localdev':
+					case 'using-foyer1':
 					case 'thankyou':
 						hideFooter();
 						break;
