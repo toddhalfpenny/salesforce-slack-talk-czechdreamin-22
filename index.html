@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/czechdreamin22.css">
+		<link rel="stylesheet" href="dist/theme/londonscalling22.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -20,7 +20,7 @@
 					===========================================================
 					TITLE
 				-->
-				<section id="title" class="title-slide">
+				<section id="title" class="title-slide center">
 					<h1>Building Custom Slack Apps</br>Now and in the Future</h1>
 					<hr/>
 					<p class="author">Todd Halfpenny</p>
@@ -50,15 +50,20 @@
 					TOPIC INTRO
 				 -->
 				<section>
-					<h1>Buildng Custom Slack Apps</h1>
+					<h1>Building Custom Slack Apps</h1>
 					<ul>
 						<li class="fade-in-then-semi-out fragment">What, Why, and when (and when not to)</li>
 						<li class="fade-in-then-semi-out fragment">What Slacks offer us</li>
 						<li class="fade-in-then-semi-out fragment">Architecture</li>
 						<li class="fade-in-then-semi-out fragment">Building an app</li>
 						<li class="fade-in-then-semi-out fragment">The future</li>
-						<li class="fade-in-then-semi-out fragment">Q &amp; A</li>
 					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Key takeaway - slack is coming</li>
+							<li>Start thinking, if nothing else</li>
+						</ul>
+					</aside>	
 				</section>
 				
 				<!-- 
@@ -118,7 +123,7 @@
 					</aside>			
 				</section>
 				
-									<!-- ===========================================================
+				<!-- ===========================================================
 					Slack Dev - UI Elements
 				-->
 				<section >
@@ -128,8 +133,8 @@
 							What do we have to play with?
 							<ul>
 								<li class="fragment fade-in-then-semi-out" data-fragment-index="1">UI Elements</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="2" data-fragment-index="2">Listeners</li>
-								<li class="fragment fade-in-then-semi-out" data-fragment-index="4">APIs</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Listeners</li>
+								<li class="fragment fade-in-then-semi-out" data-fragment-index="3">APIs</li>
 							</ul>
 						</li>
 					</ul>
@@ -141,10 +146,10 @@
 							<img class="r-stretch screenshot" data-src="assets/imgs/global_shortcuts.svg">
 							<img class="r-stretch screenshot" data-src="assets/imgs/message_shortcuts.svg">
 						</div>
-						<div class="fragment current-visible"  data-fragment-index="3">	
+						<!-- <div class="fragment current-visible"  data-fragment-index="3">	
 							<img class="r-stretch screenshot" data-src="assets/imgs/slash_commands.webp">
-						</div>
-						<div class="fragment current-visible"  data-fragment-index="4">	
+						</div> -->
+						<div class="fragment current-visible"  data-fragment-index="3">	
 							<img class="r-stretch screenshot" data-src="assets/imgs/messaging_getting_started_helloworld.webp">
 						</div>
 					</div>
@@ -335,6 +340,7 @@
 					<aside class="notes">
 						<ul>
 							<li>Slack : Middleware : SF</li>
+							<li>Not covering Slack today</li>
 							<li>Connected App for incoming</li>
 							<li>HTTP Callouts for outgoing</li>
 						</ul>
@@ -411,6 +417,10 @@
 				<!-- ===========================================================
 					Back to our app
 				 -->
+				 <section id="backtoourapp-preview">
+					<h1>Back to our app</h1>
+					<img class="screenshot" src="assets/imgs/dashboard.webp">
+				 </section>
 				<section data-transition="slide-in none">
 					<h1>Back to our app</h1>
 					<!-- TODO FLOW/ARCH IMAGES for each step -->
@@ -452,7 +462,7 @@
 					<h1>Back to our app</h1>
 					<!-- TODO FLOW/ARCH IMAGES for each step -->
 							Build our Block Kit JSON
-							<pre ><code class="javascript" data-trim data-noescape data-line-numbers="0|1-2|4|5-7|9-10|12-16|19-21|23"> 
+							<pre ><code class="javascript" data-trim data-noescape data-line-numbers="0|1-2|4|5-7|9-14|12-16|17"> 
 								const { HomeTab, Blocks, Elements, Md, Actions  } 
 									= require('slack-block-builder');
 
@@ -463,17 +473,11 @@
 
 									const listingArray = listingSummaries.records.map(
 										osEmoji(listing, requestIndex) => {
-										...
 										let listingText = `${Md.bold(listing.OS__c)}\n`;
-										listingText += `${Md.bold('Total Downloads:')} `;
-										listingText += `${listing.Total_Downloads__c}\n`;
 										...
 										return listingText;
 									}
-
-									homeTab.blocks(
-        								Blocks.Section().fields(listingArray)
-									);
+									homeTab.blocks(Blocks.Section().fields(listingArray));
 
 									return homeTab.buildToJSON();
 								}
@@ -489,7 +493,7 @@
 				</section>
 
 				<section>
-					<img src="assets/imgs/dashboard-01.png">
+					<img class="screenshot" src="assets/imgs/dashboard.webp">
 				</section>
 
 
@@ -498,8 +502,6 @@
 					<!-- <video data-autoplay src="assets/vids/create-case.mp4"></video> -->
 					<aside class="notes">
 						<ul>
-							<li>Who am i shortcut</li>
-							<li>Leads to what are shortcuts</li>
 						</ul>
 					</aside>
 				</section>
@@ -522,8 +524,6 @@
 					<!-- <video data-autoplay src="assets/vids/localdev-01.mp4"></video> -->
 					<aside class="notes">
 						<ul>
-							<li>Who am i shortcut</li>
-							<li>Leads to what are shortcuts</li>
 						</ul>
 					</aside>
 				</section>
@@ -538,15 +538,14 @@
 					<aside class="notes">
 						<ul>
 							<li></li>
-							<li></li>
 						</ul>
 					</aside>
 				</section>
 				<section data-transition="none slide-out">
 					<h1>The Future - Apex SDK for Slack</h1>
 					<ul>
-						<li class="fragment fade-in-then-semi-out">Slack SDK for Salesforce (Bolt based)</li>
 						<li class="fragment fade-in-then-semi-out">No need for Middleware</li>
+						<li class="fragment fade-in-then-semi-out">User <-> User Auth</li>
 						<li class="fragment fade-in-then-semi-out">Currently Closed Pilot (partners)</li>
 						<li class="fragment fade-in-then-semi-out">Open Pilot in June, Beta in Winter</li>
 						<li class="fragment fade-in-then-semi-out">Packageable</li>
@@ -570,7 +569,7 @@
 				 -->
 				<section id="using-foyer1">
 					<h1>App Home Opened - Event Dispatcher</h1>
-					<pre class="java padding" ><code data-trim data-noescape data-line-numbers="0|1-2|4|5|6-7|10-11">
+					<pre class="java padding" ><code data-trim data-noescape data-line-numbers="0|1-2|6-7|10-11">
 						public class EventDispatcherAppHomeOpened extends 
 							Slack.EventDispatcher {
 							...
@@ -619,7 +618,7 @@
 				 -->
 				 <section id="using-foyer3">
 					<h1>View Definition</h1>
-					<pre class="padding language-yaml" ><code data-trim data-noescape data-line-numbers="0|1-3|7-9|10-13|18-21|25-30">
+					<pre class="language-yaml" ><code data-trim data-noescape data-line-numbers="0|1-3|7-9|10-13|18-22">
 dataproviders:
 	review:
 		definition: "apex__DataProviderReview.getReviews"
@@ -641,17 +640,15 @@ components:
 								':apple:', \
 								':robot_face:')} \n
 								*Review:* {!review.Content__c}"
-							type: mrkdwn
-					- definition: actions
-						components:
-						- definition: button
-							properties:
-								label: "View Review"
-								style: "primary"
-								name: "view"
-								url: "{!view.properties.url}/{!review.Id}"		
+							type: mrkdwn	
 					</code></pre>
 				</section>
+
+
+				<section id="same-outcome">
+					<h1>The same outcome - a lot less code</h1>
+					<img class="screenshot" src="assets/imgs/dashboard.webp">
+				 </section>
 
 				<!-- 
 					===========================================================
@@ -680,11 +677,11 @@ components:
 				 <section class="center">
 					<h1>Resources</h1>
 					<ul>
-						<li class="fade-in-then-semi-out fragment">CodeLive video series<a target="_blank" href="https://www.youtube.com/watch?v=vhb5ZS5T73s" class="href">https://www.youtube.com/watch?v=vhb5ZS5T73s</a></li>
-						<li class="fade-in-then-semi-out fragment">Salesforce Slack Starter App<a target="_blank" href="https://github.com/developerforce/salesforce-slack-starter-kit"  class="href">https://github.com/developerforce/salesforce-slack-starter-kit</a></li>
-						<li class="fade-in-then-semi-out fragment">Ready to Fly App<a target="_blank" href="https://developer.salesforce.com/blogs/2022/02/building-a-slack-app-that-integrates-with-salesforce-part-1-architectural-overview"  class="href">https://developer.salesforce.com/blogs/2022/02/building-a-slack-app-that-integrates-with-salesforce-part-1-architectural-overview</a></li>
-						<li class="fade-in-then-semi-out fragment">Partner Slack Chatter Group<a target="_blank" href="https://partners.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F94V0000002Bv7"  class="href">https://partners.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F94V0000002Bv7</a></li>
-						<li class="fade-in-then-semi-out fragment">Slack Dev Docs<a  target="_blank" href="https://slack.dev/" class="href">https://slack.dev/</a></li>
+						<li>CodeLive video series<a target="_blank" href="https://www.youtube.com/watch?v=vhb5ZS5T73s" class="href">https://www.youtube.com/watch?v=vhb5ZS5T73s</a></li>
+						<li>Salesforce Slack Starter App<a target="_blank" href="https://github.com/developerforce/salesforce-slack-starter-kit"  class="href">https://github.com/developerforce/salesforce-slack-starter-kit</a></li>
+						<li>Ready to Fly App<a target="_blank" href="https://developer.salesforce.com/blogs/2022/02/building-a-slack-app-that-integrates-with-salesforce-part-1-architectural-overview"  class="href">https://developer.salesforce.com/blogs/2022/02/building-a-slack-app-that-integrates-with-salesforce-part-1-architectural-overview</a></li>
+						<li>Partner Slack Chatter Group<a target="_blank" href="https://partners.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F94V0000002Bv7"  class="href">https://partners.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F94V0000002Bv7</a></li>
+						<li>Slack Dev Docs<a  target="_blank" href="https://slack.dev/" class="href">https://slack.dev/</a></li>
 					</ul>
 					<aside class="notes">
 						<ul>
@@ -707,7 +704,7 @@ components:
 
 				<footer id='footer' class="hidden">
 					<p class="author"><a href="https://twitter.com/toddhalfpenny">@toddhalfpenny</a></p>
-					<p class="czechtags"><a href="https://twitter.com/CzechDreamin">@CzechDreamin #CD22</a></p>
+					<p class="hashtags"><a href="https://twitter.com/LdnsCall">@LdnsCall #LC22</a></p>
 				</footer>
 			</div>
 		</div>
@@ -728,7 +725,7 @@ components:
 				maxScale: 1.8,
 				margin: 0.10,
 				progress: false,
-				width: 1200,
+				width: 1300,
 				height: 900,
 
 				// Learn about plugins: https://revealjs.com/plugins/
@@ -740,9 +737,11 @@ components:
 					case 'title' :
 					case 'what-are-apps':
 					case 'whoami':
+					case 'backtoourapp-preview':
 					case 'createcase':
 					case 'localdev':
-					case 'using-foyer1':
+					//case 'using-foyer1':
+					case 'same-outcome':
 					case 'thankyou':
 						hideFooter();
 						break;

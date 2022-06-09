@@ -1,9 +1,11 @@
 /**
- * CzechDreamin theme for reveal.js
+ * London;s Calling theme for reveal.js
  */
 @import url(./fonts/source-sans-pro/source-sans-pro.css);
 :root {
   --accent: #0C9EDB;
+  --titleColor: #89050f;
+  --mainColor: #7c8689;
 }
 
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
@@ -15,13 +17,13 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  *********************************************/
 :root {
   --r-background-color: #fff;
-  --r-main-font: Source Sans Pro, Helvetica, sans-serif;
+  --r-main-font: Arial, Source Sans Pro, Helvetica, sans-serif;
   --r-main-font-size: 50px;
-  --r-main-color: #595959;
+  --r-main-color: #7c8689;
   --r-block-margin: 20px;
   --r-heading-margin: 0 0 20px 0;
-  --r-heading-font: Source Sans Pro, Helvetica, sans-serif;
-  --r-heading-color: #222;
+  --r-heading-font: Arial, Source Sans Pro, Helvetica, sans-serif;
+  --r-heading-color: #891019;
   --r-heading-line-height: 1.2;
   --r-heading-letter-spacing: normal;
   --r-heading-text-transform: none;
@@ -33,10 +35,10 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-heading3-size: 1.1em;
   --r-heading4-size: 1em;
   --r-code-font: monospace;
-  --r-link-color: #0C9EDB;
-  --r-link-color-dark: #086a92;
-  --r-link-color-hover: #3fbff4;
-  --r-selection-background-color: #6fcff7;
+  --r-link-color: #89050f;
+  --r-link-color-dark: #3f0207;
+  --r-link-color-hover: #d30817;
+  --r-selection-background-color: #f71728;
   --r-selection-color: #fff;
 }
 
@@ -380,10 +382,10 @@ footer {
   top: 95%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 90%;
+  width: 100%;
 }
 
-footer .czechtags {
+footer .hashtags {
   text-align: right;
 }
 
@@ -391,25 +393,24 @@ footer.hidden {
   display: none;
 }
 
-.slide-background.title-slide {
-  background-image: url("../../../assets/imgs/top-left-background.png"), url("../../../assets/imgs/title-sponsors.png");
+.slide-background.title-slide, .slide-background.thankyou {
+  background-image: url("../../../assets/imgs/londonscalling-logo.png"), url("../../../assets/imgs/lc-skyline-red-black.png");
   background-repeat: no-repeat;
-  background-position: top left, bottom center;
-  background-size: 25%, 80%;
-}
-
-.slide-background.thankyou {
-  background-image: url("../../../assets/imgs/top-left-background.png"), url("../../../assets/imgs/CzechDreamin.png"), url("../../../assets/imgs/title-sponsors.png");
-  background-repeat: no-repeat;
-  background-position: top left, 97% 3%, bottom center;
-  background-size: 10em, 10em, 80%;
+  background-position: 2% 2%, 100% 100%;
+  background-size: 8em, 17em;
+  border-top: none;
 }
 
 .slide-background {
-  background-image: url("../../../assets/imgs/top-left-background.png"), url("../../../assets/imgs/CzechDreamin.png");
+  background-image: url("../../../assets/imgs/londonscalling-logo.png");
   background-repeat: no-repeat;
-  background-position: top left, 97% 97%;
-  background-size: 5em, 10%;
+  background-position: 98% 2%;
+  background-size: 10%;
+  border-top: 0.3em solid var(--titleColor);
+}
+
+section#title, section#thankyou {
+  margin-top: 3em;
 }
 
 .fullvideo {
@@ -419,7 +420,6 @@ footer.hidden {
 .href {
   display: block;
   font-size: 0.6em;
-  color: var(--accent);
 }
 
 .reveal .slides {
@@ -433,21 +433,25 @@ footer.hidden {
 .reveal h1 {
   text-align: left;
   font-size: 1.4em;
-  border-width: 0 0 3px;
-  border-style: solid;
-  border-image: linear-gradient(to right, var(--accent), rgba(0, 0, 0, 0)) 7;
   margin-bottom: 0.5em;
 }
 
 .title-slide h1, .thankyou h1 {
   border-width: 0;
-  text-align: center;
+  color: var(--titleColor);
   font-size: 1.5em;
+  margin-bottom: 0;
 }
 
-#thankyou p {
-  line-height: 1em;
+.thankyou h1 {
   text-align: center;
+}
+
+.title-slide p, #thankyou p {
+  color: #89050f;
+  line-height: 1em;
+  text-align: left;
+  font-size: 0.8em;
 }
 
 .author {
@@ -455,7 +459,7 @@ footer.hidden {
 }
 
 .attribution {
-  color: var(--accent);
+  color: var(--titleColor);
   font-size: 0.5em;
 }
 
@@ -468,10 +472,11 @@ footer.hidden {
 }
 
 hr {
-  background-color: var(--accent);
+  background-color: var(--mainColor);
   border: none;
-  height: 3px;
-  max-width: 20%;
+  height: 2px;
+  max-width: 100%;
+  margin-bottom: 3em;
 }
 
 #me img {
@@ -480,13 +485,13 @@ hr {
 }
 
 img.screenshot {
-  box-shadow: var(--accent) 5px 8px 35px;
+  box-shadow: var(--titleColor) 5px 8px 35px;
   border-radius: 0.5em;
   margin-right: 1em;
 }
 
 img.screenshot, video {
-  box-shadow: var(--accent) 5px 8px 35px;
+  box-shadow: var(--titleColor) 5px 8px 35px;
   border-radius: 0.2em;
 }
 
