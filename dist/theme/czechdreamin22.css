@@ -392,7 +392,7 @@ footer.hidden {
 }
 
 .slide-background.title-slide {
-  background-image: url("../../../assets/imgs/top-left-background.png"), url("../../../assets/imgs/title-sponsors.png");
+  background-image: url("/assets/imgs/top-left-background.png"), url("../../../assets/imgs/title-sponsors.png");
   background-repeat: no-repeat;
   background-position: top left, bottom center;
   background-size: 25%, 80%;
