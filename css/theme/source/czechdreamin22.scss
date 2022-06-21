@@ -89,7 +89,7 @@ footer.hidden {
     background-repeat: no-repeat;
     background-position: top left,
         bottom center;
-    background-size: 10em,
+    background-size: 25%,
         80%;
 }
 
@@ -217,11 +217,11 @@ pre.boltsdk {
 }
 
 #using-foyer1 pre {
-    height: 700px;
+    height: 550px;
 }
-#using-foyer2 pre , #using-foyer1 pre  {
+#using-foyer2 pre  {
     height: 500px;
 }
 #using-foyer3 pre  {
-    height: 600px;
+    height: 500px;
 }
