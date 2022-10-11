@@ -51,8 +51,7 @@
 						<li class="fade-in-then-semi-out fragment">What, Why, and when (and when not to)</li>
 						<li class="fade-in-then-semi-out fragment">What Slacks offer us</li>
 						<li class="fade-in-then-semi-out fragment">Architecture</li>
-						<li class="fade-in-then-semi-out fragment">Building an app</li>
-						<li class="fade-in-then-semi-out fragment">The future</li>
+						<li class="fade-in-then-semi-out fragment">Building an app with the Apex SDK</li>
 					</ul>
 					<aside class="notes">
 						<ul>
@@ -147,7 +146,12 @@
 				 -->
 				 <section  class="green" id="whatWeAreAfter">
 					<h1>What we're after</h1>
-					<img class="screenshot" src="assets/imgs/dashboard.webp">
+					<img class="screenshot" src="assets/imgs/wt-dashboard.webp">
+					<aside class="notes">
+						<ul>
+							<li>Custom obj storing this info</li>
+						</ul>
+					</aside>
 				 </section>
 
 				
@@ -385,30 +389,50 @@
 
 
 				<!-- ===========================================================
+					We want reviews to be listed
+				 -->
+				 <section  class="green" id="our-review">
+					<h1>What we're after</h1>
+					<img class="screenshot" src="assets/imgs/wt-reviews.webp">
+					<aside class="notes">
+						<ul>
+							<li>Custom obj storing reviews</li>
+						</ul>
+					</aside>
+				 </section>
+				 
+				<!-- ===========================================================
 					Using FOYER (1)
 				 -->
 				 <section id="using-foyer1">
 					<h1>Define a SlackApp (and a <em>.slackapp</em>)</h1>
 					<pre class="yaml padding" ><code data-trim data-noescape data-line-numbers="0|2-7|3-5| 8-13|9-11">
-						description: London World Tour - Caddify Apex SDK Demo
-						commands:
-							/apex-hello:
-								action:
-									definition: apex__action__SayHello
-								title: Say Hello
-								description: A command to say Hello
-						events:
-						  app_home_opened:
-							action:
-								definition: apex__action__EventDispatcherAppHomeOpened
-							title: Example event handler for app_home_opened
-							description: The event fires when a user opens the home tab.
+description: London World Tour - Caddify Apex SDK Demo
+commands:
+	/apex-hello:
+		action:
+			definition: apex__action__SayHello
+		title: Say Hello
+		description: A command to say Hello
+events:
+	app_home_opened:
+		action:
+			definition: apex__action__EventDispatcherAppHomeOpened
+		title: Example event handler for app_home_opened
+		description: The event fires when a user opens the home tab.
 					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>Slack app on slack</li>
+							<li>New App type (no UI)</li>
+							<li>define commands/event listeners</li>
+						</ul>
+					</aside>
 				</section>
 
 
 				<!-- ===========================================================
-					Using FOYER (1)
+					Using FOYER (2)
 				 -->
 				<section id="using-foyer2">
 					<h1>App Home Opened - Event Dispatcher</h1>
@@ -429,11 +453,18 @@
 							...
 						}
 					</code></pre>
+					<aside class="notes">
+						<ul>
+							<li>Extend dispatcher</li>
+							<li>get a ViewReference</li>
+							<li>publish it</li>
+						</ul>
+					</aside>
 				</section>
 
 
 				<!-- ===========================================================
-					Using FOYER (2)
+					Using FOYER (3)
 				 -->
 				 <section id="using-foyer3">
 					<h1>Data Provider</h1>
@@ -457,18 +488,19 @@
 
 
 				<!-- ===========================================================
-					Using FOYER (3)
+					Using FOYER (4)
 				 -->
-				 <section id="using-foyer3">
+				 <section id="using-foyer4">
 					 <!-- TODO Buttons + visibility -->
 					<h1>View Definition</h1>
-					<pre class="language-yaml" ><code data-trim data-noescape data-line-numbers="0|1-3|7-9|10-13|18-22">
+					<pre class="language-yaml" ><code data-trim data-noescape data-line-numbers="0|1-3|8-10|11-14|19-23">
 dataproviders:
 	review:
 		definition: "apex__DataProviderReview.getReviews"
 components:
 	- definition: home
 		components:
+			...
 			- definition: header
 				properties:
 					text: "Recent reviews"
@@ -490,8 +522,140 @@ components:
 
 
 				<section  class="green" id="same-outcome">
-					<h1>The same outcome - a lot less code</h1>
-					<img class="screenshot" src="assets/imgs/dashboard.webp">
+					<h1>And now we have our reviews</h1>
+					<img class="screenshot" src="assets/imgs/wt-reviews.webp">
+				</section>
+
+
+				<!-- ===========================================================
+					Add interactions (1)
+				 -->
+				 <section id="interactions1">
+				   <h1>Let's add some interactivity</h1>
+				   <pre class="fragment language-yaml" ><code data-trim data-noescape data-line-numbers="0|2|4-9|16-23">
+// app_home.view
+- definition: actions
+	components:
+	- definition: button
+		properties:
+			label: "View Review"
+			style: "primary"
+			name: "view"
+			url: "{!view.properties.instanceUrl}/{!review.Id}"
+	- definition: button
+		properties:
+			label: "Create Case"
+			style: "danger"
+			name: "create_case"
+			events:
+			onclick:
+				definition: "apex__action__ActionDispatcherCreateCase"
+				properties:
+					pushModal: true
+					reviewId: '{!review.Id}'
+					reviewOS: '{!review.OS__c}'
+					reviewContent: '{!review.Content__c}'
+				   </code></pre>
+			   </section>
+
+
+				<!-- ===========================================================
+					Add interactions (2)
+				 -->
+				 <section id="interactions2">
+					<h1>Capture some input</h1>
+					<pre class="language-yaml" ><code data-trim data-noescape data-line-numbers="0|3|4-6|7-11|14-21">
+// create_case.view
+components:
+	- definition: modal
+		properties:
+			title: "Create case"
+			submitLabel: "Create"
+		events:
+			onsubmit:
+				definition: "apex__action__ActionDispatcherSubmitCase"
+				properties:
+					reviewId: "{!view.properties.reviewId}"
+		components:
+			...
+			- definition: input
+				properties:
+					label: "Subject" 
+					required: true
+				components:
+					- definition: textInput
+						properties:
+							placeholder: "Subject"
+					</code></pre>
+				</section>
+
+
+				<!-- ===========================================================
+					Add interactions (3)
+				 -->
+				 <section id="interactions3">
+					<h1>Insert / Update our records</h1>
+					<pre class="java" ><code data-trim data-noescape data-line-numbers="0|1-2|4-7|10-14|16-21">
+public class ActionDispatcherSubmitCase extends 
+	Slack.ActionDispatcher {
+
+		public Slack.ModalView call() {
+			Slack.ModalView modalView = submitCase();
+			return modalView;
+		}
+
+		private Slack.ModalView submitCase() {
+			Map<String, Object> formData = this.context.getFormData();
+			
+			Case myCase = new Case();
+			myCase.Subject = (String) formData.get('Subject');
+			insert myCase;
+
+			String title = 'Record Created';
+			String body =  'Case was created successfully.';
+			return MessageModal.getMessageModalView(
+				title, 
+				new List<String>{ body }
+			);
+		}
+					</code></pre>
+				</section>
+
+
+				<!-- ===========================================================
+					Creating a case
+				 -->
+				 <section id="createcase" class="fullvideo" data-background-video="assets/vids/wt-create-case-02.mp4" 
+				data-background-size="contain">
+				 </section>
+
+
+				<!-- ===========================================================
+					Add interactions (4)
+				 -->
+				 <section id="interactions4">
+					<h1>Conditional component rendering</h1>
+					<pre class="language-yaml" ><code data-trim data-noescape data-line-numbers="3-4|8-9">
+// app_home.view
+
+- definition: actions
+	visibility: "{!ISBLANK(review.Case__c)}"
+	components:
+		...
+
+- definition: actions
+	visibility: "{!NOT(ISBLANK(review.Case__c))}"
+	components:
+		...
+					</code></pre>
+				</section>
+				
+				<!-- ===========================================================
+					We want reviews to be listed
+				 -->
+				 <section  class="green" id="conditional-buttons">
+					<h1>Conditional buttons</h1>
+					<img class="screenshot" src="assets/imgs/wt-reviews-with-buttons.webp">
 				 </section>
 
 				<!-- 
